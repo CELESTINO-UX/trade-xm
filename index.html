@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trade XM - AI-Powered Forex Trading Signals</title>
+    <title>Trade XM - Real-Time AI Trading Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Reset and Base Styles */
         * {
@@ -18,19 +19,20 @@
             font-family: 'Roboto', sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #f8f9fa;
+            background-color: #0a0e17;
+            overflow-x: hidden;
         }
 
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: #1a237e;
+            color: #ffffff;
         }
 
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -42,7 +44,7 @@
         .btn {
             display: inline-block;
             padding: 12px 30px;
-            background: linear-gradient(135deg, #1a237e, #3949ab);
+            background: linear-gradient(135deg, #00d4ff, #0088ff);
             color: white;
             border: none;
             border-radius: 4px;
@@ -51,29 +53,40 @@
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(26, 35, 126, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
         }
 
         .btn:hover {
-            background: linear-gradient(135deg, #3949ab, #1a237e);
+            background: linear-gradient(135deg, #0088ff, #00d4ff);
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(26, 35, 126, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
         }
 
-        .btn-secondary {
-            background: linear-gradient(135deg, #00acc1, #26c6da);
-            box-shadow: 0 4px 6px rgba(0, 172, 193, 0.2);
+        .btn-success {
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
         }
 
-        .btn-secondary:hover {
-            background: linear-gradient(135deg, #26c6da, #00acc1);
-            box-shadow: 0 6px 12px rgba(0, 172, 193, 0.3);
+        .btn-success:hover {
+            background: linear-gradient(135deg, #00cc66, #00ff88);
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff3366, #cc0044);
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #cc0044, #ff3366);
+            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.4);
         }
 
         /* Header Styles */
         header {
-            background-color: white;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            background-color: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: fixed;
             width: 100%;
             top: 0;
@@ -91,19 +104,22 @@
             font-family: 'Poppins', sans-serif;
             font-size: 28px;
             font-weight: 700;
-            color: #1a237e;
+            color: white;
             text-decoration: none;
             display: flex;
             align-items: center;
         }
 
         .logo span {
-            color: #3949ab;
+            background: linear-gradient(135deg, #00d4ff, #0088ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .logo i {
             margin-right: 10px;
             font-size: 30px;
+            color: #00d4ff;
         }
 
         .nav-links {
@@ -117,14 +133,14 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 500;
             font-size: 16px;
             transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            color: #3949ab;
+            color: #00d4ff;
         }
 
         .mobile-menu-btn {
@@ -132,299 +148,475 @@
             background: none;
             border: none;
             font-size: 24px;
-            color: #1a237e;
+            color: #00d4ff;
             cursor: pointer;
         }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(26, 35, 126, 0.85), rgba(57, 73, 171, 0.9)), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 180px 0 100px;
-            margin-top: 70px;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: white;
-        }
-
-        .hero p {
-            font-size: 20px;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .hero-btns {
-            display: flex;
-            justify-content: center;
+        /* Trading Platform Layout */
+        .platform-container {
+            display: grid;
+            grid-template-columns: 300px 1fr 350px;
             gap: 20px;
-            flex-wrap: wrap;
+            margin-top: 80px;
+            padding: 20px;
+            min-height: calc(100vh - 80px);
         }
 
-        /* Stats Section */
-        .stats {
-            background-color: white;
-            padding: 60px 0;
-            text-align: center;
+        /* Left Panel - Market Watch */
+        .market-watch {
+            background: rgba(20, 25, 40, 0.9);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: fit-content;
         }
 
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .stat-item {
-            padding: 30px 20px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .stat-item i {
-            font-size: 40px;
-            color: #3949ab;
-            margin-bottom: 20px;
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: 700;
-            color: #1a237e;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 18px;
-            color: #666;
-        }
-
-        /* Features Section */
-        .features {
-            background-color: #f8f9fa;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h2 {
-            font-size: 36px;
-            position: relative;
-            display: inline-block;
-            padding-bottom: 15px;
-        }
-
-        .section-title h2:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(to right, #1a237e, #3949ab);
-            border-radius: 2px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #1a237e, #3949ab);
-            border-radius: 50%;
+        .market-watch h3 {
+            color: #00d4ff;
+            margin-bottom: 25px;
+            font-size: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
+        }
+
+        .market-watch h3 i {
+            margin-right: 10px;
+        }
+
+        .market-list {
+            list-style: none;
+        }
+
+        .market-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .market-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .market-item.active {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 3px solid #00d4ff;
+        }
+
+        .pair-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pair-name {
+            font-weight: 600;
+            color: white;
+            font-size: 16px;
+        }
+
+        .pair-description {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .pair-price {
+            text-align: right;
+        }
+
+        .current-price {
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+        }
+
+        .price-change {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .price-change.positive {
+            color: #00ff88;
+        }
+
+        .price-change.negative {
+            color: #ff3366;
+        }
+
+        /* Center Panel - Trading Chart */
+        .trading-chart {
+            background: rgba(20, 25, 40, 0.9);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 25px;
         }
 
-        .feature-icon i {
-            font-size: 30px;
-            color: white;
-        }
-
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-
-        /* How It Works */
-        .steps {
-            background-color: white;
-        }
-
-        .steps-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-top: 60px;
-        }
-
-        .step {
-            flex: 1;
-            min-width: 250px;
-            padding: 0 15px;
-            text-align: center;
-            position: relative;
-        }
-
-        .step:not(:last-child):after {
-            content: '';
-            position: absolute;
-            top: 40px;
-            right: -10px;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(to right, #1a237e, #3949ab);
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #1a237e, #3949ab);
-            border-radius: 50%;
+        .selected-pair {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 30px;
-            color: white;
-            font-size: 32px;
+        }
+
+        .selected-pair .pair-name {
+            font-size: 24px;
             font-weight: 700;
+            color: white;
+            margin-right: 15px;
         }
 
-        .step h3 {
-            margin-bottom: 15px;
+        .price-display {
+            font-size: 28px;
+            font-weight: 800;
+            color: #00d4ff;
         }
 
-        /* Pricing Section */
-        .pricing {
-            background-color: #f8f9fa;
-        }
-
-        .pricing-tabs {
+        .timeframe-selector {
             display: flex;
-            justify-content: center;
-            margin-bottom: 40px;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px;
+            border-radius: 8px;
         }
 
-        .tab-btn {
-            padding: 12px 30px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-weight: 500;
+        .timeframe-btn {
+            padding: 8px 15px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .tab-btn.active {
-            background: linear-gradient(135deg, #1a237e, #3949ab);
+        .timeframe-btn.active {
+            background: #00d4ff;
             color: white;
-            border-color: #1a237e;
         }
 
-        .tab-btn:first-child {
-            border-radius: 4px 0 0 4px;
-        }
-
-        .tab-btn:last-child {
-            border-radius: 0 4px 4px 0;
-        }
-
-        .pricing-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .pricing-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            text-align: center;
+        .chart-container {
+            flex: 1;
             position: relative;
-            transition: transform 0.3s ease;
-        }
-
-        .pricing-card.featured {
-            border-top: 5px solid #3949ab;
-            transform: scale(1.05);
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-
-        .plan-name {
-            font-size: 24px;
-            color: #1a237e;
-            margin-bottom: 15px;
-        }
-
-        .plan-price {
-            font-size: 48px;
-            font-weight: 700;
-            color: #1a237e;
+            background: rgba(10, 14, 23, 0.5);
+            border-radius: 8px;
+            padding: 20px;
             margin-bottom: 20px;
         }
 
-        .plan-price span {
-            font-size: 16px;
-            color: #666;
+        /* Right Panel - Trading Terminal */
+        .trading-terminal {
+            background: rgba(20, 25, 40, 0.9);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: fit-content;
         }
 
-        .plan-features {
-            list-style: none;
+        .account-info {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 136, 255, 0.1));
+            border-radius: 10px;
+            padding: 20px;
             margin-bottom: 30px;
-            text-align: left;
+            text-align: center;
         }
 
-        .plan-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
+        .account-balance {
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            margin: 10px 0;
         }
 
-        .plan-features li i {
-            color: #4caf50;
-            margin-right: 10px;
+        .account-type {
+            color: #00d4ff;
+            font-size: 14px;
+            font-weight: 600;
         }
 
-        /* Payment Modal */
+        .trade-form {
+            margin-bottom: 30px;
+        }
+
+        .trade-form h4 {
+            color: #00d4ff;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+
+        .trade-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .quick-actions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .quick-actions h4 {
+            color: #00d4ff;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .action-btn:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: #00d4ff;
+        }
+
+        /* Open Positions */
+        .open-positions {
+            margin-top: 30px;
+        }
+
+        .positions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .positions-list {
+            list-style: none;
+        }
+
+        .position-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid;
+        }
+
+        .position-item.buy {
+            border-left-color: #00ff88;
+        }
+
+        .position-item.sell {
+            border-left-color: #ff3366;
+        }
+
+        .position-pair {
+            font-weight: 600;
+            color: white;
+        }
+
+        .position-type {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .position-type.buy {
+            color: #00ff88;
+        }
+
+        .position-type.sell {
+            color: #ff3366;
+        }
+
+        .position-pl {
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .position-pl.profit {
+            color: #00ff88;
+        }
+
+        .position-pl.loss {
+            color: #ff3366;
+        }
+
+        /* Price Ticker */
+        .price-ticker {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 23, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 0;
+            overflow: hidden;
+        }
+
+        .ticker-container {
+            display: flex;
+            gap: 40px;
+            animation: ticker 30s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .ticker-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            white-space: nowrap;
+        }
+
+        .ticker-pair {
+            font-weight: 600;
+            color: white;
+            font-size: 16px;
+        }
+
+        .ticker-price {
+            font-weight: 700;
+            color: #00d4ff;
+            font-size: 18px;
+        }
+
+        .ticker-change {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .ticker-change.positive {
+            color: #00ff88;
+        }
+
+        .ticker-change.negative {
+            color: #ff3366;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1200px) {
+            .platform-container {
+                grid-template-columns: 250px 1fr 300px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .platform-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .market-watch, .trading-terminal {
+                max-height: 400px;
+                overflow-y: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: rgba(10, 14, 23, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                display: none;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .chart-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .trade-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Chart Customization */
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Order Confirmation Modal */
         .modal {
             display: none;
             position: fixed;
@@ -432,19 +624,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8);
             z-index: 2000;
             align-items: center;
             justify-content: center;
         }
 
         .modal-content {
-            background-color: white;
-            border-radius: 8px;
+            background: rgba(20, 25, 40, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
             width: 90%;
             max-width: 500px;
             padding: 40px;
             position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             animation: modalSlideIn 0.3s ease;
         }
 
@@ -459,425 +653,103 @@
             right: 20px;
             font-size: 24px;
             cursor: pointer;
-            color: #666;
+            color: rgba(255, 255, 255, 0.6);
         }
 
-        .payment-methods {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin: 30px 0;
+        .order-confirmation {
+            text-align: center;
         }
 
-        .payment-option {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .payment-option.selected {
-            border-color: #3949ab;
-            background-color: rgba(57, 73, 171, 0.05);
-        }
-
-        .payment-option i {
-            font-size: 30px;
-            margin-right: 15px;
-        }
-
-        .mpesa-option i {
-            color: #00a000;
-        }
-
-        .card-option i {
-            color: #1a237e;
-        }
-
-        .payment-form {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .payment-form.active {
-            display: block;
-        }
-
-        .form-group {
+        .order-icon {
+            font-size: 60px;
             margin-bottom: 20px;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
+        .order-icon.success {
+            color: #00ff88;
         }
 
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
+        .order-icon.error {
+            color: #ff3366;
         }
 
-        /* Testimonials */
-        .testimonials {
-            background-color: white;
-        }
-
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 60px auto 0;
-            position: relative;
-        }
-
-        .testimonial {
-            background-color: #f8f9fa;
+        .order-details {
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
         }
 
-        .testimonial-text {
-            font-size: 18px;
-            font-style: italic;
-            margin-bottom: 30px;
-            color: #555;
-        }
-
-        .testimonial-author {
+        .detail-row {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .author-avatar {
-            width: 60px;
-            height: 60px;
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: #666;
+            border-top-color: #00d4ff;
+            animation: spin 1s ease-in-out infinite;
         }
 
-        .author-info h4 {
-            margin-bottom: 5px;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .author-info p {
-            color: #777;
-        }
-
-        /* FAQ Section */
-        .faq {
-            background-color: #f8f9fa;
-        }
-
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            margin-bottom: 15px;
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: rgba(20, 25, 40, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid;
+            padding: 15px 20px;
             border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .faq-question {
-            padding: 20px;
-            background-color: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
-            font-size: 18px;
-        }
-
-        .faq-question i {
-            transition: transform 0.3s;
-        }
-
-        .faq-question.active i {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            padding: 0 20px;
-            background-color: white;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-        }
-
-        .faq-answer.active {
-            padding: 20px;
-            max-height: 500px;
-            border-top: 1px solid #eee;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #1a237e;
             color: white;
-            padding: 80px 0 40px;
+            z-index: 3000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 350px;
         }
 
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 60px;
+        .notification.show {
+            transform: translateX(0);
         }
 
-        .footer-logo {
-            font-family: 'Poppins', sans-serif;
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 20px;
+        .notification.success {
+            border-left-color: #00ff88;
+        }
+
+        .notification.error {
+            border-left-color: #ff3366;
+        }
+
+        .notification.info {
+            border-left-color: #00d4ff;
+        }
+
+        .notification-header {
             display: flex;
             align-items: center;
-        }
-
-        .footer-logo span {
-            color: #26c6da;
-        }
-
-        .footer-links h3, .footer-contact h3 {
-            font-size: 20px;
-            margin-bottom: 25px;
-            color: white;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #26c6da;
-        }
-
-        .footer-contact p {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-
-        .footer-contact i {
-            margin-right: 10px;
-            color: #26c6da;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .steps-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .step:not(:last-child):after {
-                display: none;
-            }
-            
-            .step {
-                margin-bottom: 50px;
-            }
-            
-            .pricing-card.featured {
-                transform: scale(1);
-            }
-            
-            .pricing-card.featured:hover {
-                transform: translateY(-10px);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .hero p {
-                font-size: 18px;
-            }
-            
-            .section-title h2 {
-                font-size: 30px;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                flex-direction: column;
-                align-items: center;
-                padding: 20px 0;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-                display: none;
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .nav-links li {
-                margin: 15px 0;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero-btns {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-btns .btn {
-                width: 100%;
-                max-width: 300px;
-                margin-bottom: 15px;
-            }
-        }
-
-        /* Currency Pairs Display */
-        .currency-pairs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .currency-pair {
-            background: linear-gradient(135deg, #1a237e, #3949ab);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-        }
-
-        .currency-pair i {
-            margin-right: 8px;
-        }
-
-        /* Payment Status */
-        .payment-status {
-            text-align: center;
-            padding: 30px;
-            display: none;
-        }
-
-        .status-success {
-            color: #4caf50;
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-
-        .status-failure {
-            color: #f44336;
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-
-        /* Demo Signal */
-        .demo-signal {
-            background-color: #e8f5e9;
-            border-left: 4px solid #4caf50;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 4px;
-        }
-
-        .signal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .signal-pair {
-            font-weight: 700;
-            font-size: 20px;
-            color: #1a237e;
-        }
-
-        .signal-action {
-            background-color: #4caf50;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: 500;
-        }
-
-        .signal-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .signal-item {
-            background-color: white;
-            padding: 10px;
-            border-radius: 4px;
-            text-align: center;
-        }
-
-        .signal-label {
-            font-size: 12px;
-            color: #777;
             margin-bottom: 5px;
         }
 
-        .signal-value {
-            font-weight: 700;
-            color: #333;
-        }
-
-        .signal-value.profit {
-            color: #4caf50;
-        }
-
-        .signal-value.loss {
-            color: #f44336;
+        .notification-header i {
+            margin-right: 10px;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -888,652 +760,968 @@
             <a href="#" class="logo">
                 <i class="fas fa-robot"></i>Trade <span>XM</span>
             </a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#" class="btn btn-secondary" id="startTradingBtn">Start Trading</a></li>
-            </ul>
+            <div class="header-right">
+                <span class="demo-balance-display" id="demoBalanceDisplay">
+                    <i class="fas fa-wallet"></i> $<span id="demoBalance">10,000.00</span>
+                </span>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#platform">Trading</a></li>
+                    <li><a href="#market">Market</a></li>
+                    <li><a href="#signals">Signals</a></li>
+                    <li><a href="#history">History</a></li>
+                    <li><a href="#" class="btn btn-success" id="depositBtn"><i class="fas fa-plus-circle"></i> Deposit</a></li>
+                </ul>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>AI-Powered Forex Trading Signals</h1>
-            <p>Trade XM uses advanced machine learning algorithms to analyze market data and deliver accurate trading signals in real-time. Maximize your profits with institutional-grade trading technology.</p>
-            <div class="hero-btns">
-                <a href="#pricing" class="btn">View Pricing Plans</a>
-                <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
-            </div>
-            <div class="currency-pairs">
-                <div class="currency-pair"><i class="fas fa-chart-line"></i> EUR/USD</div>
-                <div class="currency-pair"><i class="fas fa-chart-line"></i> GBP/USD</div>
-                <div class="currency-pair"><i class="fas fa-chart-line"></i> USD/JPY</div>
-                <div class="currency-pair"><i class="fas fa-chart-line"></i> AUD/USD</div>
-                <div class="currency-pair"><i class="fas fa-chart-line"></i> USD/CAD</div>
-                <div class="currency-pair"><i class="fas fa-chart-line"></i> XAU/USD</div>
+    <!-- Trading Platform -->
+    <div class="platform-container" id="platform">
+        <!-- Left Panel - Market Watch -->
+        <div class="market-watch">
+            <h3><i class="fas fa-chart-line"></i> Market Watch</h3>
+            <ul class="market-list" id="marketList">
+                <!-- Market items will be populated by JavaScript -->
+            </ul>
+        </div>
+
+        <!-- Center Panel - Trading Chart -->
+        <div class="trading-chart">
+            <div class="chart-header">
+                <div class="selected-pair">
+                    <div class="pair-name" id="selectedPair">EUR/USD</div>
+                    <div class="price-display" id="currentPrice">1.08542</div>
+                </div>
+                <div class="timeframe-selector">
+                    <button class="timeframe-btn active" data-timeframe="1">1M</button>
+                    <button class="timeframe-btn" data-timeframe="5">5M</button>
+                    <button class="timeframe-btn" data-timeframe="15">15M</button>
+                    <button class="timeframe-btn" data-timeframe="60">1H</button>
+                    <button class="timeframe-btn" data-timeframe="240">4H</button>
+                    <button class="timeframe-btn" data-timeframe="1440">1D</button>
+                </div>
             </div>
             
-            <!-- Demo Signal -->
-            <div class="demo-signal">
-                <div class="signal-header">
-                    <div class="signal-pair">EUR/USD - LIVE SIGNAL</div>
-                    <div class="signal-action">BUY</div>
-                </div>
-                <p>AI Model Confidence: 87.5% | Timeframe: H1 | Generated: 2 minutes ago</p>
-                <div class="signal-details">
-                    <div class="signal-item">
-                        <div class="signal-label">Entry Price</div>
-                        <div class="signal-value">1.08542</div>
-                    </div>
-                    <div class="signal-item">
-                        <div class="signal-label">Take Profit</div>
-                        <div class="signal-value">1.09120</div>
-                    </div>
-                    <div class="signal-item">
-                        <div class="signal-label">Stop Loss</div>
-                        <div class="signal-value">1.08210</div>
-                    </div>
-                    <div class="signal-item">
-                        <div class="signal-label">Potential Profit</div>
-                        <div class="signal-value profit">+57.8 pips</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="container stats-container">
-            <div class="stat-item">
-                <i class="fas fa-signal"></i>
-                <div class="stat-number">10,000+</div>
-                <div class="stat-label">Signals Generated</div>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-bullseye"></i>
-                <div class="stat-number">95%</div>
-                <div class="stat-label">Accuracy Rate</div>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-users"></i>
-                <div class="stat-number">245+</div>
-                <div class="stat-label">Active Traders</div>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-arrow-up"></i>
-                <div class="stat-number">40%</div>
-                <div class="stat-label">Avg. Win Rate Increase</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features</h2>
-                <p>Everything you need to automate your forex trading with confidence</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3>ML-Powered Signals</h3>
-                    <p>Advanced machine learning models trained on years of historical data for accurate predictions across multiple currency pairs.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Real-Time Updates</h3>
-                    <p>Instant signal delivery via API with sub-second latency for timely trade execution. Never miss a trading opportunity.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Risk Management</h3>
-                    <p>Automatic SL/TP calculation based on market volatility and risk parameters. Protect your capital with smart risk controls.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-link"></i>
-                    </div>
-                    <h3>MT5 Integration</h3>
-                    <p>Seamless connection to MetaTrader 5 via our Expert Advisor for automated trading. Execute trades directly from signals.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <h3>Multiple Timeframes</h3>
-                    <p>M5, M15, H1, H4, D1 supported - Trade on your preferred timeframe with signals optimized for each time horizon.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-history"></i>
-                    </div>
-                    <h3>Performance Analytics</h3>
-                    <p>Comprehensive dashboard with detailed analytics of signal performance, win rates, and historical accuracy metrics.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="steps" id="how-it-works">
-        <div class="container">
-            <div class="section-title">
-                <h2>How It Works</h2>
-                <p>Get started in minutes with our simple 4-step process</p>
-            </div>
-            <div class="steps-container">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Sign Up</h3>
-                    <p>Create your free account in seconds - no credit card required for the trial period.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Subscribe</h3>
-                    <p>Choose your preferred plan and complete payment via M-Pesa or Card for instant access.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Connect MT5</h3>
-                    <p>Install our Expert Advisor on your MetaTrader 5 platform with simple one-click setup.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Start Trading</h3>
-                    <p>Receive AI-powered signals automatically and watch your trades execute in real-time.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that's right for you. All plans include a 7-day free trial.</p>
+            <div class="chart-container">
+                <canvas id="tradingChart"></canvas>
             </div>
             
-            <div class="pricing-cards">
-                <div class="pricing-card">
-                    <div class="plan-name">Basic</div>
-                    <div class="plan-price">$49<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li><i class="fas fa-check"></i> 3 Currency Pairs</li>
-                        <li><i class="fas fa-check"></i> H1 & H4 Timeframes</li>
-                        <li><i class="fas fa-check"></i> 5 Daily Signals</li>
-                        <li><i class="fas fa-check"></i> Email Notifications</li>
-                        <li><i class="fas fa-times"></i> MT5 Auto-Trading</li>
-                        <li><i class="fas fa-times"></i> Priority Support</li>
-                    </ul>
-                    <button class="btn btn-secondary select-plan" data-plan="basic">Select Plan</button>
+            <div class="chart-footer">
+                <div class="chart-stats">
+                    <div class="stat">
+                        <span class="stat-label">High:</span>
+                        <span class="stat-value" id="dayHigh">1.08720</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Low:</span>
+                        <span class="stat-value" id="dayLow">1.08410</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Change:</span>
+                        <span class="stat-value positive" id="dailyChange">+0.0021 (+0.19%)</span>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Trading Terminal -->
+        <div class="trading-terminal">
+            <div class="account-info">
+                <div class="account-type">DEMO ACCOUNT</div>
+                <div class="account-balance" id="accountBalance">$10,000.00</div>
+                <div class="account-equity">Equity: $10,235.60</div>
+            </div>
+            
+            <div class="trade-form">
+                <h4><i class="fas fa-trade-federation"></i> Place Order</h4>
                 
-                <div class="pricing-card featured">
-                    <div class="plan-name">Pro</div>
-                    <div class="plan-price">$99<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li><i class="fas fa-check"></i> 6 Currency Pairs</li>
-                        <li><i class="fas fa-check"></i> All Timeframes</li>
-                        <li><i class="fas fa-check"></i> Unlimited Signals</li>
-                        <li><i class="fas fa-check"></i> SMS & Email Alerts</li>
-                        <li><i class="fas fa-check"></i> MT5 Auto-Trading</li>
-                        <li><i class="fas fa-check"></i> Priority Support</li>
-                    </ul>
-                    <button class="btn select-plan" data-plan="pro">Select Plan</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <div class="plan-name">Enterprise</div>
-                    <div class="plan-price">$199<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li><i class="fas fa-check"></i> All Currency Pairs</li>
-                        <li><i class="fas fa-check"></i> All Timeframes</li>
-                        <li><i class="fas fa-check"></i> Unlimited Signals</li>
-                        <li><i class="fas fa-check"></i> All Alert Methods</li>
-                        <li><i class="fas fa-check"></i> MT5 Auto-Trading</li>
-                        <li><i class="fas fa-check"></i> 24/7 Phone Support</li>
-                        <li><i class="fas fa-check"></i> Custom Strategies</li>
-                    </ul>
-                    <button class="btn btn-secondary select-plan" data-plan="enterprise">Select Plan</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Payment Modal -->
-    <div class="modal" id="paymentModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <h2>Complete Your Subscription</h2>
-            <p>You are subscribing to: <strong id="selectedPlan">Pro Plan - $99/month</strong></p>
-            
-            <div class="payment-methods">
-                <div class="payment-option mpesa-option" id="mpesaOption">
-                    <i class="fas fa-mobile-alt"></i>
-                    <div>
-                        <h3>Pay with M-Pesa</h3>
-                        <p>You will receive a prompt on your phone to complete payment</p>
+                <div class="form-group">
+                    <label for="tradeVolume">Volume (Lots)</label>
+                    <input type="range" id="tradeVolume" min="0.01" max="10" step="0.01" value="0.1" class="form-control">
+                    <div class="volume-display">
+                        <span id="volumeValue">0.1</span> lots ($<span id="volumeCost">13.00</span> per trade)
                     </div>
                 </div>
                 
-                <div class="payment-option card-option" id="cardOption">
-                    <i class="fas fa-credit-card"></i>
-                    <div>
-                        <h3>Pay with Card</h3>
-                        <p>Secure payment via Visa, Mastercard, or American Express</p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="stopLoss">Stop Loss (pips)</label>
+                        <input type="number" id="stopLoss" value="20" min="5" max="200" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="takeProfit">Take Profit (pips)</label>
+                        <input type="number" id="takeProfit" value="40" min="10" max="500" class="form-control">
                     </div>
                 </div>
+                
+                <div class="trade-buttons">
+                    <button class="btn btn-success" id="buyBtn">
+                        <i class="fas fa-arrow-up"></i> BUY
+                    </button>
+                    <button class="btn btn-danger" id="sellBtn">
+                        <i class="fas fa-arrow-down"></i> SELL
+                    </button>
+                </div>
             </div>
             
-            <!-- M-Pesa Payment Form -->
-            <div class="payment-form" id="mpesaForm">
-                <div class="form-group">
-                    <label for="mpesaPhone">M-Pesa Phone Number</label>
-                    <input type="tel" id="mpesaPhone" placeholder="e.g. +254714019736" value="+254714019736">
-                    <p class="small-text">You will receive a payment request on this number</p>
+            <div class="quick-actions">
+                <h4><i class="fas fa-bolt"></i> Quick Actions</h4>
+                <div class="action-buttons">
+                    <button class="action-btn" id="closeAllBtn">
+                        <i class="fas fa-times-circle"></i> Close All
+                    </button>
+                    <button class="action-btn" id="hedgeBtn">
+                        <i class="fas fa-balance-scale"></i> Hedge
+                    </button>
+                    <button class="action-btn" id="reverseBtn">
+                        <i class="fas fa-exchange-alt"></i> Reverse
+                    </button>
+                    <button class="action-btn" id="demoResetBtn">
+                        <i class="fas fa-redo"></i> Reset Demo
+                    </button>
                 </div>
-                <button class="btn" id="confirmMpesa">Confirm M-Pesa Payment</button>
-                <p class="small-text">After clicking, check your phone to enter your M-Pesa PIN</p>
             </div>
             
-            <!-- Card Payment Form -->
-            <div class="payment-form" id="cardForm">
-                <div class="form-group">
-                    <label for="cardNumber">Card Number</label>
-                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+            <div class="open-positions">
+                <div class="positions-header">
+                    <h4><i class="fas fa-chart-bar"></i> Open Positions</h4>
+                    <span class="positions-count" id="positionsCount">0 positions</span>
                 </div>
-                <div class="form-group">
-                    <label for="cardExpiry">Expiry Date</label>
-                    <input type="text" id="cardExpiry" placeholder="MM/YY">
-                </div>
-                <div class="form-group">
-                    <label for="cardCVC">CVC</label>
-                    <input type="text" id="cardCVC" placeholder="123">
-                </div>
-                <button class="btn" id="confirmCard">Pay $99 with Card</button>
-                <p class="small-text">Your payment is secured with 256-bit SSL encryption</p>
-            </div>
-            
-            <!-- Payment Status -->
-            <div class="payment-status" id="paymentStatus">
-                <div class="status-success" id="successIcon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h2>Payment Successful!</h2>
-                <p>Your subscription to the <strong id="confirmedPlan">Pro Plan</strong> is now active.</p>
-                <p>You will receive your API credentials and installation instructions via email within 2 minutes.</p>
-                <button class="btn" id="closeAfterPayment">Continue to Dashboard</button>
+                <ul class="positions-list" id="positionsList">
+                    <!-- Positions will be populated by JavaScript -->
+                </ul>
             </div>
         </div>
     </div>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>What Our Traders Say</h2>
-                <p>Join hundreds of successful traders using Trade XM</p>
-            </div>
-            <div class="testimonial-slider">
-                <div class="testimonial">
-                    <div class="testimonial-text">
-                        "Amazing accuracy! My win rate improved by 40% after switching to Trade XM. The signals are incredibly precise and timely."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JD</div>
-                        <div class="author-info">
-                            <h4>John Davis</h4>
-                            <p>Professional Trader, 8 years experience</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Price Ticker -->
+    <div class="price-ticker">
+        <div class="ticker-container" id="tickerContainer">
+            <!-- Ticker items will be populated by JavaScript -->
         </div>
-    </section>
+    </div>
 
-    <!-- FAQ Section -->
-    <section class="faq" id="faq">
-        <div class="container">
-            <div class="section-title">
-                <h2>Frequently Asked Questions</h2>
-                <p>Everything you need to know about Trade XM</p>
-            </div>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        How accurate are the trading signals?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Our AI models have consistently achieved 92-96% accuracy in backtesting across multiple market conditions. Actual live trading results vary but our users report an average 40% improvement in their win rates. Past performance is not indicative of future results.
-                    </div>
+    <!-- Order Confirmation Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="order-confirmation">
+                <div class="order-icon success" id="orderIcon">
+                    <i class="fas fa-check-circle"></i>
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        What currency pairs do you support?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        We currently support EUR/USD, GBP/USD, USD/JPY, AUD/USD, USDCAD, and XAU/USD (Gold). These are the most liquid forex pairs with the best trading conditions. We're constantly working to add more pairs based on user demand.
-                    </div>
+                <h2 id="orderTitle">Order Executed Successfully!</h2>
+                <div class="order-details" id="orderDetails">
+                    <!-- Order details will be populated by JavaScript -->
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        How do I connect Trade XM to my MT5 platform?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        After subscription, you'll receive an API key and our Expert Advisor file. Simply install the EA on your MT5 platform, enter your API key, and the signals will automatically execute trades according to your risk parameters. Our setup guide makes this process simple even for beginners.
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        Can I use Trade XM on a demo account first?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Absolutely! We encourage all new users to start with a demo account. All our plans include a 7-day free trial, and you can connect Trade XM to your MT5 demo account to test the signals risk-free before trading with real money.
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        What payment methods do you accept?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        We accept M-Pesa for Kenyan customers and all major credit/debit cards (Visa, Mastercard, American Express) for international customers. All payments are processed securely through encrypted channels.
-                    </div>
-                </div>
+                <button class="btn" id="closeOrderModal">Continue Trading</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
-                    <div class="footer-logo">
-                        <i class="fas fa-robot"></i>Trade <span>XM</span>
-                    </div>
-                    <p>Trade XM is an AI-powered forex trading platform that delivers institutional-grade trading signals to retail traders worldwide. Our mission is to democratize algorithmic trading through cutting-edge technology.</p>
-                </div>
-                <div class="footer-links">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-contact">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-envelope"></i> support@tradexm.com</p>
-                    <p><i class="fas fa-phone"></i> +254 714 019 736</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2023 Trade XM. All rights reserved. | <a href="#" style="color: rgba(255, 255, 255, 0.8);">Privacy Policy</a> | <a href="#" style="color: rgba(255, 255, 255, 0.8);">Terms of Service</a></p>
-                <p class="risk-disclaimer">
-                    <strong>Risk Disclaimer:</strong> Trading foreign exchange (forex) on margin carries a high level of risk and may not be suitable for all investors. Past performance is not indicative of future results. We do not guarantee profits. Only trade with money you can afford to lose.
-                </p>
-            </div>
+    <!-- Notification System -->
+    <div class="notification" id="notification">
+        <div class="notification-header">
+            <i class="fas fa-info-circle"></i>
+            <strong id="notificationTitle">Notification</strong>
         </div>
-    </footer>
+        <div id="notificationMessage">This is a notification message.</div>
+    </div>
 
     <script>
-        // Mobile Menu Toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            document.getElementById('navLinks').classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('active');
+        // Initialize Trading Platform
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+                document.getElementById('navLinks').classList.toggle('active');
             });
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('navLinks').classList.remove('active');
+                });
+            });
+
+            // Initialize Trading Platform
+            initializeTradingPlatform();
         });
 
-        // FAQ Accordion
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const answer = question.nextElementSibling;
-                const isActive = answer.classList.contains('active');
+        // Trading Platform State
+        let tradingState = {
+            balance: 10000.00,
+            demoBalance: 10000.00,
+            selectedPair: 'EUR/USD',
+            currentPrice: 1.08542,
+            positions: [],
+            chart: null,
+            timeframe: '1',
+            marketData: {},
+            tickerSpeed: 30,
+            tradeCostPerLot: 130.00 // $1.30 per 0.01 lot
+        };
+
+        // Market Data
+        const currencyPairs = [
+            { symbol: 'EUR/USD', name: 'Euro vs US Dollar', price: 1.08542, change: 0.0021, changePercent: 0.19, high: 1.08720, low: 1.08410 },
+            { symbol: 'GBP/USD', name: 'British Pound vs US Dollar', price: 1.26580, change: -0.0015, changePercent: -0.12, high: 1.26890, low: 1.26320 },
+            { symbol: 'USD/JPY', name: 'US Dollar vs Japanese Yen', price: 147.325, change: 0.452, changePercent: 0.31, high: 147.890, low: 146.950 },
+            { symbol: 'USD/CAD', name: 'US Dollar vs Canadian Dollar', price: 1.35420, change: -0.0018, changePercent: -0.13, high: 1.35780, low: 1.35210 },
+            { symbol: 'AUD/USD', name: 'Australian Dollar vs US Dollar', price: 0.65780, change: 0.0012, changePercent: 0.18, high: 0.65920, low: 0.65560 },
+            { symbol: 'XAU/USD', name: 'Gold vs US Dollar', price: 1984.50, change: 12.80, changePercent: 0.65, high: 1992.30, low: 1975.80 },
+            { symbol: 'BTC/USD', name: 'Bitcoin vs US Dollar', price: 43520.00, change: 1250.00, changePercent: 2.96, high: 43890.00, low: 42850.00 },
+            { symbol: 'ETH/USD', name: 'Ethereum vs US Dollar', price: 2350.00, change: 45.00, changePercent: 1.95, high: 2380.00, low: 2310.00 }
+        ];
+
+        // Initialize Trading Platform
+        function initializeTradingPlatform() {
+            // Initialize market data
+            initializeMarketData();
+            
+            // Initialize chart
+            initializeChart();
+            
+            // Initialize market watch
+            populateMarketWatch();
+            
+            // Initialize ticker
+            populateTicker();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Start price updates
+            startPriceUpdates();
+            
+            // Start position updates
+            startPositionUpdates();
+        }
+
+        // Initialize Market Data
+        function initializeMarketData() {
+            currencyPairs.forEach(pair => {
+                tradingState.marketData[pair.symbol] = { ...pair };
+            });
+        }
+
+        // Populate Market Watch
+        function populateMarketWatch() {
+            const marketList = document.getElementById('marketList');
+            marketList.innerHTML = '';
+            
+            currencyPairs.forEach(pair => {
+                const isActive = pair.symbol === tradingState.selectedPair;
+                const changeClass = pair.change >= 0 ? 'positive' : 'negative';
+                const changeSign = pair.change >= 0 ? '+' : '';
                 
-                // Close all FAQ answers
-                document.querySelectorAll('.faq-answer').forEach(ans => {
-                    ans.classList.remove('active');
-                });
-                document.querySelectorAll('.faq-question').forEach(q => {
-                    q.classList.remove('active');
-                });
+                const listItem = document.createElement('li');
+                listItem.className = `market-item ${isActive ? 'active' : ''}`;
+                listItem.dataset.symbol = pair.symbol;
+                listItem.innerHTML = `
+                    <div class="pair-info">
+                        <div class="pair-name">${pair.symbol}</div>
+                        <div class="pair-description">${pair.name}</div>
+                    </div>
+                    <div class="pair-price">
+                        <div class="current-price">${formatPrice(pair.symbol, pair.price)}</div>
+                        <div class="price-change ${changeClass}">
+                            ${changeSign}${formatChange(pair.symbol, pair.change)}
+                        </div>
+                    </div>
+                `;
                 
-                // Open clicked answer if it wasn't already active
-                if (!isActive) {
-                    answer.classList.add('active');
-                    question.classList.add('active');
+                listItem.addEventListener('click', () => selectPair(pair.symbol));
+                marketList.appendChild(listItem);
+            });
+        }
+
+        // Populate Ticker
+        function populateTicker() {
+            const tickerContainer = document.getElementById('tickerContainer');
+            tickerContainer.innerHTML = '';
+            
+            // Create two copies for seamless looping
+            for (let i = 0; i < 2; i++) {
+                currencyPairs.forEach(pair => {
+                    const changeClass = pair.change >= 0 ? 'positive' : 'negative';
+                    const changeSign = pair.change >= 0 ? '+' : '';
+                    
+                    const tickerItem = document.createElement('div');
+                    tickerItem.className = 'ticker-item';
+                    tickerItem.innerHTML = `
+                        <div class="ticker-pair">${pair.symbol}</div>
+                        <div class="ticker-price">${formatPrice(pair.symbol, pair.price)}</div>
+                        <div class="ticker-change ${changeClass}">
+                            ${changeSign}${formatChange(pair.symbol, pair.change)}
+                        </div>
+                    `;
+                    
+                    tickerContainer.appendChild(tickerItem);
+                });
+            }
+        }
+
+        // Select Currency Pair
+        function selectPair(symbol) {
+            tradingState.selectedPair = symbol;
+            const pair = tradingState.marketData[symbol];
+            
+            // Update UI
+            document.getElementById('selectedPair').textContent = symbol;
+            document.getElementById('currentPrice').textContent = formatPrice(symbol, pair.price);
+            document.getElementById('dayHigh').textContent = formatPrice(symbol, pair.high);
+            document.getElementById('dayLow').textContent = formatPrice(symbol, pair.low);
+            
+            const changeClass = pair.change >= 0 ? 'positive' : 'negative';
+            const changeSign = pair.change >= 0 ? '+' : '';
+            document.getElementById('dailyChange').textContent = 
+                `${changeSign}${formatChange(symbol, pair.change)} (${changeSign}${pair.changePercent}%)`;
+            document.getElementById('dailyChange').className = `stat-value ${changeClass}`;
+            
+            // Update active state in market watch
+            document.querySelectorAll('.market-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.symbol === symbol) {
+                    item.classList.add('active');
                 }
             });
-        });
+            
+            // Update chart
+            updateChartData();
+            
+            // Show notification
+            showNotification('info', 'Pair Selected', `Switched to ${symbol}`);
+        }
 
-        // Plan Selection and Payment Modal
-        const paymentModal = document.getElementById('paymentModal');
-        const closeModal = document.getElementById('closeModal');
-        const selectPlanButtons = document.querySelectorAll('.select-plan');
-        const mpesaOption = document.getElementById('mpesaOption');
-        const cardOption = document.getElementById('cardOption');
-        const mpesaForm = document.getElementById('mpesaForm');
-        const cardForm = document.getElementById('cardForm');
-        const paymentStatus = document.getElementById('paymentStatus');
-        const startTradingBtn = document.getElementById('startTradingBtn');
-        const closeAfterPayment = document.getElementById('closeAfterPayment');
-        
-        // Plan pricing data
-        const planData = {
-            basic: { name: "Basic Plan", price: "$49", monthly: 49 },
-            pro: { name: "Pro Plan", price: "$99", monthly: 99 },
-            enterprise: { name: "Enterprise Plan", price: "$199", monthly: 199 }
-        };
-        
-        let selectedPlan = "pro";
-        let selectedPaymentMethod = "mpesa";
-        
-        // Open modal when selecting a plan
-        selectPlanButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                selectedPlan = this.getAttribute('data-plan');
-                const plan = planData[selectedPlan];
-                document.getElementById('selectedPlan').textContent = `${plan.name} - ${plan.price}/month`;
-                document.getElementById('confirmedPlan').textContent = plan.name;
-                
-                // Reset payment forms
-                mpesaForm.classList.remove('active');
-                cardForm.classList.remove('active');
-                paymentStatus.style.display = 'none';
-                
-                // Reset payment method selection
-                mpesaOption.classList.add('selected');
-                cardOption.classList.remove('selected');
-                selectedPaymentMethod = 'mpesa';
-                mpesaForm.classList.add('active');
-                
-                paymentModal.style.display = 'flex';
+        // Initialize Chart
+        function initializeChart() {
+            const ctx = document.getElementById('tradingChart').getContext('2d');
+            
+            // Create gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(0, 212, 255, 0.3)');
+            gradient.addColorStop(1, 'rgba(0, 212, 255, 0)');
+            
+            tradingState.chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: generateTimeLabels(50),
+                    datasets: [{
+                        label: tradingState.selectedPair,
+                        data: generatePriceData(50, tradingState.marketData[tradingState.selectedPair].price),
+                        borderColor: '#00d4ff',
+                        backgroundColor: gradient,
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 0
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(20, 25, 40, 0.9)',
+                            titleColor: '#00d4ff',
+                            bodyColor: 'white',
+                            borderColor: '#00d4ff',
+                            borderWidth: 1
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.6)'
+                            }
+                        },
+                        y: {
+                            position: 'right',
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.6)',
+                                callback: function(value) {
+                                    return formatPrice(tradingState.selectedPair, value);
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
             });
-        });
-        
-        // Start Trading button also opens modal
-        startTradingBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            selectedPlan = "pro";
-            const plan = planData[selectedPlan];
-            document.getElementById('selectedPlan').textContent = `${plan.name} - ${plan.price}/month`;
-            document.getElementById('confirmedPlan').textContent = plan.name;
+        }
+
+        // Update Chart Data
+        function updateChartData() {
+            const pair = tradingState.marketData[tradingState.selectedPair];
             
-            // Reset payment forms
-            mpesaForm.classList.remove('active');
-            cardForm.classList.remove('active');
-            paymentStatus.style.display = 'none';
+            tradingState.chart.data.labels = generateTimeLabels(50);
+            tradingState.chart.data.datasets[0].data = generatePriceData(50, pair.price);
+            tradingState.chart.data.datasets[0].label = tradingState.selectedPair;
+            tradingState.chart.options.scales.y.ticks.callback = function(value) {
+                return formatPrice(tradingState.selectedPair, value);
+            };
             
-            // Reset payment method selection
-            mpesaOption.classList.add('selected');
-            cardOption.classList.remove('selected');
-            selectedPaymentMethod = 'mpesa';
-            mpesaForm.classList.add('active');
+            tradingState.chart.update('none');
+        }
+
+        // Generate Time Labels
+        function generateTimeLabels(count) {
+            const labels = [];
+            const now = new Date();
             
-            paymentModal.style.display = 'flex';
-        });
-        
-        // Close modal
-        closeModal.addEventListener('click', function() {
-            paymentModal.style.display = 'none';
-        });
-        
-        // Close modal when clicking outside
-        window.addEventListener('click', function(e) {
-            if (e.target === paymentModal) {
-                paymentModal.style.display = 'none';
+            for (let i = count - 1; i >= 0; i--) {
+                const time = new Date(now.getTime() - i * 60000 * parseInt(tradingState.timeframe));
+                labels.push(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
             }
-        });
-        
-        // Payment method selection
-        mpesaOption.addEventListener('click', function() {
-            mpesaOption.classList.add('selected');
-            cardOption.classList.remove('selected');
-            mpesaForm.classList.add('active');
-            cardForm.classList.remove('active');
-            selectedPaymentMethod = 'mpesa';
-        });
-        
-        cardOption.addEventListener('click', function() {
-            cardOption.classList.add('selected');
-            mpesaOption.classList.remove('selected');
-            cardForm.classList.add('active');
-            mpesaForm.classList.remove('active');
-            selectedPaymentMethod = 'card';
-        });
-        
-        // M-Pesa payment simulation
-        document.getElementById('confirmMpesa').addEventListener('click', function() {
-            const phoneNumber = document.getElementById('mpesaPhone').value;
-            const plan = planData[selectedPlan];
             
-            // Simulate payment processing
-            this.textContent = "Processing...";
-            this.disabled = true;
+            return labels;
+        }
+
+        // Generate Price Data
+        function generatePriceData(count, basePrice) {
+            const data = [basePrice];
+            let currentPrice = basePrice;
+            const volatility = getPairVolatility(tradingState.selectedPair);
             
-            // Show payment status after delay
-            setTimeout(() => {
-                mpesaForm.style.display = 'none';
-                paymentStatus.style.display = 'block';
+            for (let i = 1; i < count; i++) {
+                // Simulate price movement
+                const change = (Math.random() - 0.5) * volatility;
+                currentPrice += change;
                 
-                // In a real implementation, you would make an API call to Safaricom's M-Pesa API
-                console.log(`M-Pesa payment request sent to: ${phoneNumber} for Ksh ${plan.monthly * 100}`);
-                console.log("Payment would be processed to merchant account associated with +254714019736");
-            }, 2000);
-        });
-        
-        // Card payment simulation
-        document.getElementById('confirmCard').addEventListener('click', function() {
-            const cardNumber = document.getElementById('cardNumber').value;
-            const plan = planData[selectedPlan];
+                // Ensure price stays within daily range
+                const pair = tradingState.marketData[tradingState.selectedPair];
+                currentPrice = Math.max(pair.low, Math.min(pair.high, currentPrice));
+                
+                data.push(currentPrice);
+            }
             
-            // Basic validation
-            if (!cardNumber || cardNumber.replace(/\s/g, '').length < 16) {
-                alert("Please enter a valid card number");
+            return data;
+        }
+
+        // Get Pair Volatility
+        function getPairVolatility(symbol) {
+            const volatilities = {
+                'EUR/USD': 0.0003,
+                'GBP/USD': 0.0004,
+                'USD/JPY': 0.05,
+                'USD/CAD': 0.00035,
+                'AUD/USD': 0.0004,
+                'XAU/USD': 1.5,
+                'BTC/USD': 150,
+                'ETH/USD': 8
+            };
+            
+            return volatilities[symbol] || 0.0005;
+        }
+
+        // Format Price
+        function formatPrice(symbol, price) {
+            if (symbol.includes('JPY')) {
+                return price.toFixed(2);
+            } else if (symbol.includes('XAU') || symbol.includes('BTC') || symbol.includes('ETH')) {
+                return price.toFixed(2);
+            } else {
+                return price.toFixed(5);
+            }
+        }
+
+        // Format Change
+        function formatChange(symbol, change) {
+            if (symbol.includes('JPY')) {
+                return change.toFixed(2);
+            } else if (symbol.includes('XAU') || symbol.includes('BTC') || symbol.includes('ETH')) {
+                return change.toFixed(2);
+            } else {
+                return change.toFixed(5);
+            }
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Timeframe buttons
+            document.querySelectorAll('.timeframe-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.timeframe-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    tradingState.timeframe = this.dataset.timeframe;
+                    updateChartData();
+                });
+            });
+
+            // Trade volume slider
+            const volumeSlider = document.getElementById('tradeVolume');
+            const volumeValue = document.getElementById('volumeValue');
+            const volumeCost = document.getElementById('volumeCost');
+            
+            volumeSlider.addEventListener('input', function() {
+                const volume = parseFloat(this.value);
+                const cost = (volume * tradingState.tradeCostPerLot).toFixed(2);
+                
+                volumeValue.textContent = volume;
+                volumeCost.textContent = cost;
+                
+                // Update trade cost display
+                document.querySelector('.volume-display').innerHTML = `
+                    <span id="volumeValue">${volume}</span> lots ($${cost} per trade)
+                `;
+            });
+
+            // Buy button
+            document.getElementById('buyBtn').addEventListener('click', () => {
+                executeTrade('buy');
+            });
+
+            // Sell button
+            document.getElementById('sellBtn').addEventListener('click', () => {
+                executeTrade('sell');
+            });
+
+            // Quick action buttons
+            document.getElementById('closeAllBtn').addEventListener('click', closeAllPositions);
+            document.getElementById('hedgeBtn').addEventListener('click', hedgePosition);
+            document.getElementById('reverseBtn').addEventListener('click', reversePosition);
+            document.getElementById('demoResetBtn').addEventListener('click', resetDemoAccount);
+
+            // Deposit button
+            document.getElementById('depositBtn').addEventListener('click', showDepositModal);
+
+            // Modal close buttons
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            document.getElementById('closeOrderModal').addEventListener('click', closeModal);
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                const modal = document.getElementById('orderModal');
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Execute Trade
+        function executeTrade(type) {
+            const volume = parseFloat(document.getElementById('tradeVolume').value);
+            const stopLoss = parseInt(document.getElementById('stopLoss').value);
+            const takeProfit = parseInt(document.getElementById('takeProfit').value);
+            const pair = tradingState.selectedPair;
+            const price = tradingState.marketData[pair].price;
+            
+            // Calculate trade cost
+            const tradeCost = volume * tradingState.tradeCostPerLot;
+            
+            // Check balance
+            if (tradeCost > tradingState.balance) {
+                showNotification('error', 'Insufficient Funds', `You need $${tradeCost.toFixed(2)} but only have $${tradingState.balance.toFixed(2)}`);
                 return;
             }
             
-            // Simulate payment processing
-            this.textContent = "Processing...";
-            this.disabled = true;
+            // Deduct trade cost
+            tradingState.balance -= tradeCost;
+            updateBalance();
             
-            // Show payment status after delay
+            // Create position
+            const position = {
+                id: Date.now(),
+                pair: pair,
+                type: type,
+                volume: volume,
+                entryPrice: price,
+                stopLoss: price + (type === 'buy' ? -stopLoss * 0.0001 : stopLoss * 0.0001),
+                takeProfit: price + (type === 'buy' ? takeProfit * 0.0001 : -takeProfit * 0.0001),
+                timestamp: new Date(),
+                pl: 0.00
+            };
+            
+            // Add to positions
+            tradingState.positions.push(position);
+            updatePositions();
+            
+            // Show order confirmation
+            showOrderConfirmation(type, pair, volume, price, tradeCost);
+            
+            // Show notification
+            showNotification('success', 'Order Executed', 
+                `${type.toUpperCase()} ${volume} lots ${pair} at ${formatPrice(pair, price)}`
+            );
+        }
+
+        // Close All Positions
+        function closeAllPositions() {
+            if (tradingState.positions.length === 0) {
+                showNotification('info', 'No Positions', 'You have no open positions to close');
+                return;
+            }
+            
+            const totalPL = tradingState.positions.reduce((sum, pos) => sum + pos.pl, 0);
+            
+            // Add P/L to balance
+            tradingState.balance += totalPL;
+            updateBalance();
+            
+            // Clear positions
+            tradingState.positions = [];
+            updatePositions();
+            
+            // Show notification
+            showNotification('success', 'All Positions Closed', 
+                `Closed ${tradingState.positions.length} positions. Total P/L: $${totalPL.toFixed(2)}`
+            );
+        }
+
+        // Hedge Position
+        function hedgePosition() {
+            const activePositions = tradingState.positions.filter(p => p.pair === tradingState.selectedPair);
+            
+            if (activePositions.length === 0) {
+                showNotification('info', 'No Position', `No open position for ${tradingState.selectedPair}`);
+                return;
+            }
+            
+            // Execute opposite trade
+            const lastPosition = activePositions[activePositions.length - 1];
+            const oppositeType = lastPosition.type === 'buy' ? 'sell' : 'buy';
+            
+            executeTrade(oppositeType);
+            
+            showNotification('info', 'Position Hedged', 
+                `Hedged ${lastPosition.type} position with ${oppositeType} order`
+            );
+        }
+
+        // Reverse Position
+        function reversePosition() {
+            const activePositions = tradingState.positions.filter(p => p.pair === tradingState.selectedPair);
+            
+            if (activePositions.length === 0) {
+                showNotification('info', 'No Position', `No open position for ${tradingState.selectedPair}`);
+                return;
+            }
+            
+            // Close existing position
+            const lastPosition = activePositions[activePositions.length - 1];
+            tradingState.balance += lastPosition.pl;
+            tradingState.positions = tradingState.positions.filter(p => p.id !== lastPosition.id);
+            
+            // Execute opposite trade
+            const oppositeType = lastPosition.type === 'buy' ? 'sell' : 'buy';
+            executeTrade(oppositeType);
+            
+            showNotification('info', 'Position Reversed', 
+                `Reversed ${lastPosition.type} position to ${oppositeType}`
+            );
+        }
+
+        // Reset Demo Account
+        function resetDemoAccount() {
+            if (confirm('Are you sure you want to reset your demo account? All positions will be closed and balance reset to $10,000.')) {
+                tradingState.balance = 10000.00;
+                tradingState.demoBalance = 10000.00;
+                tradingState.positions = [];
+                
+                updateBalance();
+                updatePositions();
+                
+                showNotification('success', 'Account Reset', 'Demo account reset to $10,000');
+            }
+        }
+
+        // Update Balance Display
+        function updateBalance() {
+            document.getElementById('demoBalance').textContent = tradingState.balance.toFixed(2);
+            document.getElementById('accountBalance').textContent = `$${tradingState.balance.toFixed(2)}`;
+        }
+
+        // Update Positions Display
+        function updatePositions() {
+            const positionsList = document.getElementById('positionsList');
+            const positionsCount = document.getElementById('positionsCount');
+            
+            positionsList.innerHTML = '';
+            positionsCount.textContent = `${tradingState.positions.length} position${tradingState.positions.length !== 1 ? 's' : ''}`;
+            
+            tradingState.positions.forEach(position => {
+                const positionItem = document.createElement('li');
+                positionItem.className = `position-item ${position.type}`;
+                positionItem.innerHTML = `
+                    <div class="position-pair">${position.pair}</div>
+                    <div class="position-type ${position.type}">${position.type.toUpperCase()}</div>
+                    <div class="position-pl ${position.pl >= 0 ? 'profit' : 'loss'}">
+                        ${position.pl >= 0 ? '+' : ''}$${position.pl.toFixed(2)}
+                    </div>
+                `;
+                
+                positionsList.appendChild(positionItem);
+            });
+        }
+
+        // Show Order Confirmation
+        function showOrderConfirmation(type, pair, volume, price, cost) {
+            const modal = document.getElementById('orderModal');
+            const orderIcon = document.getElementById('orderIcon');
+            const orderTitle = document.getElementById('orderTitle');
+            const orderDetails = document.getElementById('orderDetails');
+            
+            // Set icon and title
+            orderIcon.className = `order-icon success`;
+            orderIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            orderTitle.textContent = 'Order Executed Successfully!';
+            
+            // Set details
+            orderDetails.innerHTML = `
+                <div class="detail-row">
+                    <span>Order Type:</span>
+                    <span style="color: ${type === 'buy' ? '#00ff88' : '#ff3366'}; font-weight: 600;">
+                        ${type.toUpperCase()}
+                    </span>
+                </div>
+                <div class="detail-row">
+                    <span>Currency Pair:</span>
+                    <span>${pair}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Volume:</span>
+                    <span>${volume} lots</span>
+                </div>
+                <div class="detail-row">
+                    <span>Entry Price:</span>
+                    <span>${formatPrice(pair, price)}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Trade Cost:</span>
+                    <span>$${cost.toFixed(2)}</span>
+                </div>
+                <div class="detail-row">
+                    <span>New Balance:</span>
+                    <span>$${tradingState.balance.toFixed(2)}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Timestamp:</span>
+                    <span>${new Date().toLocaleTimeString()}</span>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        // Show Deposit Modal
+        function showDepositModal() {
+            // For now, just add $1000 to demo
+            tradingState.balance += 1000;
+            updateBalance();
+            
+            showNotification('success', 'Funds Added', '$1,000 added to your demo account');
+        }
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        // Show Notification
+        function showNotification(type, title, message) {
+            const notification = document.getElementById('notification');
+            const notificationTitle = document.getElementById('notificationTitle');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            // Set notification content
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
+            
+            // Set notification type
+            notification.className = `notification ${type} show`;
+            
+            // Set icon based on type
+            const icon = notification.querySelector('i');
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+            } else {
+                icon.className = 'fas fa-info-circle';
+            }
+            
+            // Auto-hide after 5 seconds
             setTimeout(() => {
-                cardForm.style.display = 'none';
-                paymentStatus.style.display = 'block';
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        // Start Price Updates
+        function startPriceUpdates() {
+            setInterval(() => {
+                // Update all prices
+                Object.keys(tradingState.marketData).forEach(symbol => {
+                    const pair = tradingState.marketData[symbol];
+                    const volatility = getPairVolatility(symbol);
+                    
+                    // Simulate price movement
+                    const change = (Math.random() - 0.5) * volatility * 2;
+                    pair.price += change;
+                    
+                    // Update change
+                    const basePrice = pair.symbol.includes('JPY') ? 147.0 : 
+                                    pair.symbol.includes('XAU') ? 1980.0 : 
+                                    pair.symbol.includes('BTC') ? 43000.0 : 
+                                    pair.symbol.includes('ETH') ? 2300.0 : 1.0;
+                    
+                    pair.change = pair.price - basePrice;
+                    pair.changePercent = (pair.change / basePrice * 100).toFixed(2);
+                    
+                    // Keep within daily range
+                    pair.price = Math.max(pair.low, Math.min(pair.high, pair.price));
+                });
                 
-                // In a real implementation, you would make an API call to Stripe or another payment processor
-                console.log(`Card payment processed: ${cardNumber.substring(0, 4)}... for $${plan.monthly}`);
-            }, 2000);
-        });
-        
-        // Close modal after successful payment
-        closeAfterPayment.addEventListener('click', function() {
-            paymentModal.style.display = 'none';
-            
-            // In a real implementation, you would redirect to user dashboard
-            alert("Welcome to Trade XM! Check your email for login credentials and setup instructions.");
-        });
-        
-        // Auto-populate M-Pesa field with the provided number
-        document.getElementById('mpesaPhone').value = "+254714019736";
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
+                // Update current pair display
+                const currentPair = tradingState.marketData[tradingState.selectedPair];
+                if (currentPair) {
+                    document.getElementById('currentPrice').textContent = formatPrice(tradingState.selectedPair, currentPair.price);
+                    
+                    // Update chart with new price
+                    const chartData = tradingState.chart.data.datasets[0].data;
+                    chartData.push(currentPair.price);
+                    chartData.shift();
+                    
+                    // Update time labels
+                    const labels = tradingState.chart.data.labels;
+                    const now = new Date();
+                    labels.push(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+                    labels.shift();
+                    
+                    tradingState.chart.update('none');
+                }
                 
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
+                // Update market watch
+                updateMarketWatch();
                 
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                // Update ticker
+                updateTicker();
+                
+                // Update positions P/L
+                updatePositionsPL();
+                
+            }, 2000); // Update every 2 seconds
+        }
+
+        // Start Position Updates
+        function startPositionUpdates() {
+            setInterval(() => {
+                updatePositionsPL();
+            }, 1000); // Update P/L every second
+        }
+
+        // Update Market Watch
+        function updateMarketWatch() {
+            document.querySelectorAll('.market-item').forEach(item => {
+                const symbol = item.dataset.symbol;
+                const pair = tradingState.marketData[symbol];
+                
+                if (pair) {
+                    const priceElement = item.querySelector('.current-price');
+                    const changeElement = item.querySelector('.price-change');
+                    
+                    priceElement.textContent = formatPrice(symbol, pair.price);
+                    
+                    const changeClass = pair.change >= 0 ? 'positive' : 'negative';
+                    const changeSign = pair.change >= 0 ? '+' : '';
+                    
+                    changeElement.textContent = `${changeSign}${formatChange(symbol, pair.change)}`;
+                    changeElement.className = `price-change ${changeClass}`;
                 }
             });
-        });
-        
-        // Update signal periodically (demo)
-        function updateSignal() {
-            const actions = ['BUY', 'SELL'];
-            const pairs = ['EUR/USD', 'GBP/USD', 'USD/JPY'];
-            const action = actions[Math.floor(Math.random() * actions.length)];
-            const pair = pairs[Math.floor(Math.random() * pairs.length)];
-            
-            document.querySelector('.signal-pair').textContent = `${pair} - LIVE SIGNAL`;
-            document.querySelector('.signal-action').textContent = action;
-            document.querySelector('.signal-action').style.backgroundColor = 
-                action === 'BUY' ? '#4caf50' : '#f44336';
-            
-            // Update confidence randomly between 75-96%
-            const confidence = (75 + Math.random() * 21).toFixed(1);
-            document.querySelector('.demo-signal p').innerHTML = 
-                `AI Model Confidence: <strong>${confidence}%</strong> | Timeframe: H1 | Generated: Just now`;
         }
-        
-        // Update signal every 30 seconds for demo purposes
-        setInterval(updateSignal, 30000);
-        
-        // Initialize with random signal
-        setTimeout(updateSignal, 1000);
+
+        // Update Ticker
+        function updateTicker() {
+            document.querySelectorAll('.ticker-item').forEach((item, index) => {
+                const symbolIndex = index % currencyPairs.length;
+                const symbol = currencyPairs[symbolIndex].symbol;
+                const pair = tradingState.marketData[symbol];
+                
+                if (pair) {
+                    const priceElement = item.querySelector('.ticker-price');
+                    const changeElement = item.querySelector('.ticker-change');
+                    
+                    priceElement.textContent = formatPrice(symbol, pair.price);
+                    
+                    const changeClass = pair.change >= 0 ? 'positive' : 'negative';
+                    const changeSign = pair.change >= 0 ? '+' : '';
+                    
+                    changeElement.textContent = `${changeSign}${formatChange(symbol, pair.change)}`;
+                    changeElement.className = `ticker-change ${changeClass}`;
+                }
+            });
+        }
+
+        // Update Positions P/L
+        function updatePositionsPL() {
+            tradingState.positions.forEach(position => {
+                const currentPrice = tradingState.marketData[position.pair].price;
+                const priceDiff = currentPrice - position.entryPrice;
+                
+                if (position.type === 'buy') {
+                    position.pl = priceDiff * position.volume * 100000; // Simplified P/L calculation
+                } else {
+                    position.pl = -priceDiff * position.volume * 100000;
+                }
+                
+                // Check stop loss and take profit
+                if ((position.type === 'buy' && currentPrice <= position.stopLoss) ||
+                    (position.type === 'sell' && currentPrice >= position.stopLoss)) {
+                    // Stop loss triggered
+                    closePosition(position.id, 'stop loss');
+                } else if ((position.type === 'buy' && currentPrice >= position.takeProfit) ||
+                         (position.type === 'sell' && currentPrice <= position.takeProfit)) {
+                    // Take profit triggered
+                    closePosition(position.id, 'take profit');
+                }
+            });
+            
+            updatePositions();
+        }
+
+        // Close Position
+        function closePosition(positionId, reason) {
+            const positionIndex = tradingState.positions.findIndex(p => p.id === positionId);
+            
+            if (positionIndex !== -1) {
+                const position = tradingState.positions[positionIndex];
+                
+                // Add P/L to balance
+                tradingState.balance += position.pl;
+                updateBalance();
+                
+                // Remove position
+                tradingState.positions.splice(positionIndex, 1);
+                updatePositions();
+                
+                // Show notification
+                showNotification('info', 'Position Closed', 
+                    `${position.type.toUpperCase()} ${position.pair} closed by ${reason}. P/L: $${position.pl.toFixed(2)}`
+                );
+            }
+        }
+
+        // Initialize on load
+        initializeTradingPlatform();
     </script>
 </body>
 </html>
