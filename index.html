@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <style>
         /* Reset and Base Styles */
         * {
@@ -312,6 +313,62 @@
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
+            min-height: 400px;
+        }
+
+        /* Chart Overlay for Trade Lines */
+        .chart-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .trade-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .trade-line.entry {
+            border-bottom: 2px dashed #00ff88;
+        }
+
+        .trade-line.sl {
+            border-bottom: 2px dashed #ff3366;
+        }
+
+        .trade-line.tp {
+            border-bottom: 2px dashed #00d4ff;
+        }
+
+        .line-label {
+            position: absolute;
+            right: 10px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+            transform: translateY(-50%);
+        }
+
+        .line-label.entry {
+            background: rgba(0, 255, 136, 0.7);
+        }
+
+        .line-label.sl {
+            background: rgba(255, 51, 102, 0.7);
+        }
+
+        .line-label.tp {
+            background: rgba(0, 212, 255, 0.7);
         }
 
         /* Right Panel - Trading Terminal */
@@ -385,6 +442,13 @@
         .form-control:focus {
             outline: none;
             border-color: #00d4ff;
+        }
+
+        .volume-display {
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            text-align: center;
         }
 
         .trade-buttons {
@@ -616,6 +680,37 @@
             height: 100% !important;
         }
 
+        .chart-footer {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+        }
+
+        .stat-value.positive {
+            color: #00ff88;
+        }
+
+        .stat-value.negative {
+            color: #ff3366;
+        }
+
         /* Order Confirmation Modal */
         .modal {
             display: none;
@@ -751,6 +846,24 @@
             margin-right: 10px;
             font-size: 20px;
         }
+
+        /* Trade Line Preview Indicator */
+        .line-preview {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: white;
+            z-index: 20;
+            display: none;
+        }
+
+        .line-preview.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -806,6 +919,16 @@
             </div>
             
             <div class="chart-container">
+                <!-- Trade Line Preview Indicator -->
+                <div class="line-preview" id="linePreview">
+                    <i class="fas fa-info-circle"></i> Hover over BUY/SELL buttons to preview levels
+                </div>
+                
+                <!-- Chart Overlay for Trade Lines -->
+                <div class="chart-overlay" id="chartOverlay">
+                    <!-- Trade lines will be drawn here by JavaScript -->
+                </div>
+                
                 <canvas id="tradingChart"></canvas>
             </div>
             
@@ -960,7 +1083,10 @@
             timeframe: '1',
             marketData: {},
             tickerSpeed: 30,
-            tradeCostPerLot: 130.00 // $1.30 per 0.01 lot
+            tradeCostPerLot: 130.00,
+            pendingTradeLines: null,
+            isDrawingLines: false,
+            lineTimeout: null
         };
 
         // Market Data
@@ -997,6 +1123,9 @@
             
             // Start position updates
             startPositionUpdates();
+            
+            // Show line preview indicator
+            showLinePreview();
         }
 
         // Initialize Market Data
@@ -1065,6 +1194,9 @@
 
         // Select Currency Pair
         function selectPair(symbol) {
+            // Remove any existing trade lines
+            removeTradeLines();
+            
             tradingState.selectedPair = symbol;
             const pair = tradingState.marketData[symbol];
             
@@ -1255,6 +1387,97 @@
             }
         }
 
+        // Draw Trade Lines on Chart
+        function drawTradeLines(entryPrice, slPrice, tpPrice, tradeType) {
+            // Clear any existing lines first
+            removeTradeLines();
+            
+            const chartOverlay = document.getElementById('chartOverlay');
+            const chartCanvas = document.getElementById('tradingChart');
+            const chartRect = chartCanvas.getBoundingClientRect();
+            
+            // Get chart y-scale range
+            const chart = tradingState.chart;
+            const yScale = chart.scales.y;
+            const chartMin = yScale.min;
+            const chartMax = yScale.max;
+            
+            // Calculate vertical positions
+            const getYPosition = (price) => {
+                const pricePercentage = (price - chartMin) / (chartMax - chartMin);
+                return chartRect.height * (1 - pricePercentage);
+            };
+            
+            // Create lines
+            const lines = [
+                { price: entryPrice, type: 'entry', label: 'ENTRY', color: tradeType === 'buy' ? '#00ff88' : '#ff3366' },
+                { price: slPrice, type: 'sl', label: 'STOP LOSS', color: '#ff3366' },
+                { price: tpPrice, type: 'tp', label: 'TAKE PROFIT', color: '#00d4ff' }
+            ];
+            
+            lines.forEach(line => {
+                const yPosition = getYPosition(line.price);
+                
+                // Create line element
+                const lineElement = document.createElement('div');
+                lineElement.className = `trade-line ${line.type}`;
+                lineElement.style.top = `${yPosition}px`;
+                lineElement.style.borderBottomColor = line.color;
+                
+                // Create label
+                const labelElement = document.createElement('div');
+                labelElement.className = `line-label ${line.type}`;
+                labelElement.style.top = `${yPosition}px`;
+                labelElement.textContent = `${line.label}: ${formatPrice(tradingState.selectedPair, line.price)}`;
+                labelElement.style.backgroundColor = line.color + 'B3';
+                
+                chartOverlay.appendChild(lineElement);
+                chartOverlay.appendChild(labelElement);
+            });
+            
+            // Store line data for updates
+            tradingState.pendingTradeLines = {
+                entryPrice,
+                slPrice,
+                tpPrice,
+                tradeType,
+                lines: lines
+            };
+            
+            tradingState.isDrawingLines = true;
+        }
+
+        // Remove Trade Lines
+        function removeTradeLines() {
+            const chartOverlay = document.getElementById('chartOverlay');
+            chartOverlay.innerHTML = '';
+            tradingState.pendingTradeLines = null;
+            tradingState.isDrawingLines = false;
+            
+            // Hide preview indicator
+            document.getElementById('linePreview').classList.remove('active');
+        }
+
+        // Update Trade Lines Position
+        function updateTradeLinesPosition() {
+            if (!tradingState.pendingTradeLines || !tradingState.isDrawingLines) return;
+            
+            // Redraw lines with current positions
+            const { entryPrice, slPrice, tpPrice, tradeType } = tradingState.pendingTradeLines;
+            drawTradeLines(entryPrice, slPrice, tpPrice, tradeType);
+        }
+
+        // Show Line Preview Indicator
+        function showLinePreview() {
+            const linePreview = document.getElementById('linePreview');
+            linePreview.classList.add('active');
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                linePreview.classList.remove('active');
+            }, 5000);
+        }
+
         // Setup Event Listeners
         function setupEventListeners() {
             // Timeframe buttons
@@ -1264,6 +1487,7 @@
                     this.classList.add('active');
                     tradingState.timeframe = this.dataset.timeframe;
                     updateChartData();
+                    updateTradeLinesPosition();
                 });
             });
 
@@ -1276,22 +1500,66 @@
                 const volume = parseFloat(this.value);
                 const cost = (volume * tradingState.tradeCostPerLot).toFixed(2);
                 
-                volumeValue.textContent = volume;
+                volumeValue.textContent = volume.toFixed(2);
                 volumeCost.textContent = cost;
                 
                 // Update trade cost display
                 document.querySelector('.volume-display').innerHTML = `
-                    <span id="volumeValue">${volume}</span> lots ($${cost} per trade)
+                    <span id="volumeValue">${volume.toFixed(2)}</span> lots ($${cost} per trade)
                 `;
+                
+                // Update lines if they're being shown
+                if (tradingState.isDrawingLines) {
+                    updateTradePreview();
+                }
             });
 
-            // Buy button
-            document.getElementById('buyBtn').addEventListener('click', () => {
+            // Stop Loss and Take Profit inputs
+            document.getElementById('stopLoss').addEventListener('input', function() {
+                if (tradingState.isDrawingLines) {
+                    updateTradePreview();
+                }
+            });
+            
+            document.getElementById('takeProfit').addEventListener('input', function() {
+                if (tradingState.isDrawingLines) {
+                    updateTradePreview();
+                }
+            });
+
+            // Buy button with hover preview
+            const buyBtn = document.getElementById('buyBtn');
+            buyBtn.addEventListener('mouseenter', () => {
+                showTradePreview('buy');
+                document.getElementById('linePreview').classList.add('active');
+            });
+            
+            buyBtn.addEventListener('mouseleave', () => {
+                if (!tradingState.isDrawingLines || (tradingState.pendingTradeLines && tradingState.pendingTradeLines.tradeType !== 'buy')) {
+                    removeTradeLines();
+                }
+                document.getElementById('linePreview').classList.remove('active');
+            });
+            
+            buyBtn.addEventListener('click', () => {
                 executeTrade('buy');
             });
 
-            // Sell button
-            document.getElementById('sellBtn').addEventListener('click', () => {
+            // Sell button with hover preview
+            const sellBtn = document.getElementById('sellBtn');
+            sellBtn.addEventListener('mouseenter', () => {
+                showTradePreview('sell');
+                document.getElementById('linePreview').classList.add('active');
+            });
+            
+            sellBtn.addEventListener('mouseleave', () => {
+                if (!tradingState.isDrawingLines || (tradingState.pendingTradeLines && tradingState.pendingTradeLines.tradeType !== 'sell')) {
+                    removeTradeLines();
+                }
+                document.getElementById('linePreview').classList.remove('active');
+            });
+            
+            sellBtn.addEventListener('click', () => {
                 executeTrade('sell');
             });
 
@@ -1315,6 +1583,54 @@
                     closeModal();
                 }
             });
+            
+            // Window resize - update line positions
+            window.addEventListener('resize', () => {
+                if (tradingState.isDrawingLines) {
+                    setTimeout(updateTradeLinesPosition, 100);
+                }
+            });
+        }
+
+        // Show Trade Preview
+        function showTradePreview(type) {
+            const volume = parseFloat(document.getElementById('tradeVolume').value);
+            const stopLoss = parseInt(document.getElementById('stopLoss').value);
+            const takeProfit = parseInt(document.getElementById('takeProfit').value);
+            const pair = tradingState.selectedPair;
+            const price = tradingState.marketData[pair].price;
+            
+            // Calculate stop loss and take profit prices
+            let slPrice, tpPrice;
+            const pipValue = getPipValue(pair);
+            
+            if (type === 'buy') {
+                slPrice = price - (stopLoss * pipValue);
+                tpPrice = price + (takeProfit * pipValue);
+            } else {
+                slPrice = price + (stopLoss * pipValue);
+                tpPrice = price - (takeProfit * pipValue);
+            }
+            
+            // Draw the lines on chart
+            drawTradeLines(price, slPrice, tpPrice, type);
+        }
+
+        // Update Trade Preview
+        function updateTradePreview() {
+            if (!tradingState.pendingTradeLines) return;
+            
+            const type = tradingState.pendingTradeLines.tradeType;
+            showTradePreview(type);
+        }
+
+        // Get Pip Value for Currency Pair
+        function getPipValue(symbol) {
+            if (symbol.includes('JPY')) {
+                return 0.01; // For JPY pairs, pip is 0.01
+            } else {
+                return 0.0001; // For other pairs, pip is 0.0001
+            }
         }
 
         // Execute Trade
@@ -1325,12 +1641,26 @@
             const pair = tradingState.selectedPair;
             const price = tradingState.marketData[pair].price;
             
+            // Calculate stop loss and take profit prices
+            let slPrice, tpPrice;
+            const pipValue = getPipValue(pair);
+            
+            if (type === 'buy') {
+                slPrice = price - (stopLoss * pipValue);
+                tpPrice = price + (takeProfit * pipValue);
+            } else {
+                slPrice = price + (stopLoss * pipValue);
+                tpPrice = price - (takeProfit * pipValue);
+            }
+            
             // Calculate trade cost
             const tradeCost = volume * tradingState.tradeCostPerLot;
             
             // Check balance
             if (tradeCost > tradingState.balance) {
                 showNotification('error', 'Insufficient Funds', `You need $${tradeCost.toFixed(2)} but only have $${tradingState.balance.toFixed(2)}`);
+                // Remove lines if insufficient funds
+                removeTradeLines();
                 return;
             }
             
@@ -1345,8 +1675,8 @@
                 type: type,
                 volume: volume,
                 entryPrice: price,
-                stopLoss: price + (type === 'buy' ? -stopLoss * 0.0001 : stopLoss * 0.0001),
-                takeProfit: price + (type === 'buy' ? takeProfit * 0.0001 : -takeProfit * 0.0001),
+                stopLoss: slPrice,
+                takeProfit: tpPrice,
                 timestamp: new Date(),
                 pl: 0.00
             };
@@ -1356,12 +1686,15 @@
             updatePositions();
             
             // Show order confirmation
-            showOrderConfirmation(type, pair, volume, price, tradeCost);
+            showOrderConfirmation(type, pair, volume, price, tradeCost, slPrice, tpPrice);
             
             // Show notification
             showNotification('success', 'Order Executed', 
                 `${type.toUpperCase()} ${volume} lots ${pair} at ${formatPrice(pair, price)}`
             );
+            
+            // Remove trade lines after execution
+            setTimeout(removeTradeLines, 1000);
         }
 
         // Close All Positions
@@ -1440,6 +1773,9 @@
                 updateBalance();
                 updatePositions();
                 
+                // Remove any trade lines
+                removeTradeLines();
+                
                 showNotification('success', 'Account Reset', 'Demo account reset to $10,000');
             }
         }
@@ -1474,7 +1810,7 @@
         }
 
         // Show Order Confirmation
-        function showOrderConfirmation(type, pair, volume, price, cost) {
+        function showOrderConfirmation(type, pair, volume, price, cost, slPrice, tpPrice) {
             const modal = document.getElementById('orderModal');
             const orderIcon = document.getElementById('orderIcon');
             const orderTitle = document.getElementById('orderTitle');
@@ -1499,11 +1835,19 @@
                 </div>
                 <div class="detail-row">
                     <span>Volume:</span>
-                    <span>${volume} lots</span>
+                    <span>${volume.toFixed(2)} lots</span>
                 </div>
                 <div class="detail-row">
                     <span>Entry Price:</span>
                     <span>${formatPrice(pair, price)}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Stop Loss:</span>
+                    <span style="color: #ff3366;">${formatPrice(pair, slPrice)}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Take Profit:</span>
+                    <span style="color: #00d4ff;">${formatPrice(pair, tpPrice)}</span>
                 </div>
                 <div class="detail-row">
                     <span>Trade Cost:</span>
@@ -1607,6 +1951,11 @@
                     labels.shift();
                     
                     tradingState.chart.update('none');
+                    
+                    // Update trade lines position if they exist
+                    if (tradingState.isDrawingLines) {
+                        updateTradeLinesPosition();
+                    }
                 }
                 
                 // Update market watch
